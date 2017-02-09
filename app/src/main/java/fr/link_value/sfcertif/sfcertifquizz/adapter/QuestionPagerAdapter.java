@@ -19,6 +19,7 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         return RadioQuestionFragment.newInstance("", "");
     }
 

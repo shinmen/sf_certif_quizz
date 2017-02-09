@@ -1,43 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="fr.link_value.sfcertif.sfcertifquizz.fragments.RadioQuestionFragment">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <FrameLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/radio_question_container">
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/radio_group_question"/>
-    </LinearLayout>
+    </FrameLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/radio_answer_container">
 
-        <EditText
+        <TextView
+            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="Name"
-            android:ems="10"
             android:id="@+id/radio_correct_answer"
             android:layout_weight="1" />
-
-        <EditText
+        <TextView
+            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="Name"
-            android:ems="10"
             android:id="@+id/radio_more"
             android:layout_weight="1" />
-    </LinearLayout>
-</FrameLayout>
+    </FrameLayout>
+</LinearLayout>
