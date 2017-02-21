@@ -2,8 +2,8 @@ package fr.link_value.sfcertif.sfcertifquizz.utils;
 
 import java.util.List;
 
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.Question;
-import io.reactivex.Observable;
+import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 
 /**
@@ -12,6 +12,6 @@ import retrofit2.http.GET;
 
 public interface QuestionService {
     //mock api response => http://www.mocky.io/v2/
-    @GET("589c64a3250000a2078055c7")
-    Observable<List<Question>> getListQuestions();
+    @GET("58ac2aa0100000890c514a77")
+    Single<List<QuestionConverter>> getListQuestions();
 }

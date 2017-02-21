@@ -1,14 +1,31 @@
 package fr.link_value.sfcertif.sfcertifquizz.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
+import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
+import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,17 +35,20 @@ import fr.link_value.sfcertif.sfcertifquizz.R;
  * Use the {@link CheckboxQuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CheckboxQuestionFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class CheckboxQuestionFragment extends Fragment implements View.OnClickListener {
+    private static final String ARG_QUESTION = "checkbox_arg_question";
+    private static final String ARG_MORE = "checkbox_arg_more";
+    private static final String ARG_CHOICE = "checkbox_arg_choice";
+    private static final String ARG_ANSWER = "checkbox_arg_answer";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Quizz quizz;
 
     private OnFragmentResponseListener mListener;
+    private TextView question;
+    private TextView correctAnswer;
+    private TableRow group;
+    private ImageView answerStatus;
+    private LinearLayout answerContainer;
 
     public CheckboxQuestionFragment() {
         // Required empty public constructor
@@ -38,16 +58,17 @@ public class CheckboxQuestionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment CheckboxQuestionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CheckboxQuestionFragment newInstance(String param1, String param2) {
+    public static CheckboxQuestionFragment newInstance(QuestionConverter checkboxQuestion) {
         CheckboxQuestionFragment fragment = new CheckboxQuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_QUESTION, checkboxQuestion.getQuestion());
+        args.putString(ARG_MORE, checkboxQuestion.getMore());
+        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) checkboxQuestion.getChoice());
+        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) checkboxQuestion.getAnswer());
+        fragment.setArguments(args);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +77,12 @@ public class CheckboxQuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            quizz = new Quizz(
+                    getArguments().getString(ARG_QUESTION),
+                    getArguments().getString(ARG_MORE),
+                    getArguments().getStringArrayList(ARG_CHOICE),
+                    getArguments().getStringArrayList(ARG_ANSWER)
+            );
         }
     }
 
@@ -65,7 +90,34 @@ public class CheckboxQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_checkbox_question, container, false);
+        View view =  inflater.inflate(R.layout.fragment_checkbox_quizz, container, false);
+
+        question = (TextView) view.findViewById(R.id.checkbox_question);
+        question.setText(quizz.getQuestion());
+        group = (TableRow) view.findViewById(R.id.checkbox_group_question);
+        ArrayList<String> choices = (ArrayList<String>) quizz.getChoices();
+        for (int i = 0; i < choices.size(); i++) {
+            CheckBox checkBox = new CheckBox(getActivity());
+            checkBox.setId(i);
+            checkBox.setText(choices.get(i));
+            group.setId(i);
+            group.addView(checkBox);
+        }
+        List<String> answers = quizz.getAnswers();
+        String answer = TextUtils.join(", ", answers);
+
+        correctAnswer = (TextView) view.findViewById(R.id.checkbox_correct_answer);
+        correctAnswer.setText(answer);
+        answerStatus = (ImageView) view.findViewById(R.id.checkbox_answer_img);
+        answerContainer = (LinearLayout) view.findViewById(R.id.checkbox_answer_container);
+
+        TextView more = (TextView) view.findViewById(R.id.checkbox_more);
+        more.setText(quizz.getMore());
+
+        Button validBtn = (Button) view.findViewById(R.id.checkbox_valid_btn);
+        validBtn.setOnClickListener(this);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,5 +142,30 @@ public class CheckboxQuestionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        answerContainer.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.checkbox_valid_btn) {
+            validateAnswer(v);
+        }
+    }
+
+    private void validateAnswer(View view) {
+        answerContainer.setVisibility(View.VISIBLE);
+        ArrayList<String> userAnswers = new ArrayList<>();
+        for (int i = 0; i< group.getChildCount(); i++) {
+            CheckBox checkbox = (CheckBox) group.getChildAt(i);
+            if (checkbox.isChecked()) {
+                userAnswers.add(checkbox.getText().toString());
+            }
+        }
+        ArrayList<String> answers = new ArrayList<>(quizz.getAnswers());
+        if (answers.equals(userAnswers)) {
+            answerStatus.setImageResource(android.R.drawable.btn_plus);
+        } else {
+            answerStatus.setImageResource(android.R.drawable.btn_minus);
+        }
     }
 }

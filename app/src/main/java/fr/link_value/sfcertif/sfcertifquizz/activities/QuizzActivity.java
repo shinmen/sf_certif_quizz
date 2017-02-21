@@ -11,14 +11,13 @@ import java.util.List;
 import fr.link_value.sfcertif.sfcertifquizz.R;
 import fr.link_value.sfcertif.sfcertifquizz.adapter.QuestionPagerAdapter;
 import fr.link_value.sfcertif.sfcertifquizz.fragments.OnFragmentResponseListener;
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.Question;
+import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import fr.link_value.sfcertif.sfcertifquizz.utils.fragmentBuilder.QuestionFragmentFactory;
 import fr.link_value.sfcertif.sfcertifquizz.utils.QuestionService;
 import fr.link_value.sfcertif.sfcertifquizz.utils.RestClient;
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -41,37 +40,31 @@ public class QuizzActivity extends AppCompatActivity implements OnFragmentRespon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quizz);
-
         loadQuestionList()
-                .cache()
-                .flatMapIterable(new Function<List<Question>, Iterable<Question>>() {
+                //.cache()
+  /*              .flatMapIterable(new Function<List<QuestionConverter>, Iterable<QuestionConverter>>() {
                     @Override
-                    public Iterable<Question> apply(List<Question> questions) throws Exception {
+                    public Iterable<QuestionConverter> apply(List<QuestionConverter> questions) throws Exception {
                         return questions;
                     }
-                })
+                })*/
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<Question>() {
+                .subscribe(new DisposableSingleObserver<List<QuestionConverter>>() {
                     @Override
-                    public void onNext(Question value) {
+                    public void onSuccess(List<QuestionConverter> questionConverters) {
+                        QuestionFragmentFactory fragmentFactory = new QuestionFragmentFactory(questionConverters);
+                        // Instantiate a ViewPager and a PagerAdapter.
+                        mPager = (ViewPager) findViewById(R.id.pager_question);
+                        mPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), fragmentFactory, questionConverters.size());
+                        mPager.setAdapter(mPagerAdapter);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                        Log.d("err", e.getMessage());
                     }
                 });
-
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager_question);
-        mPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
     }
 
     @Override
@@ -91,7 +84,7 @@ public class QuizzActivity extends AppCompatActivity implements OnFragmentRespon
 
     }
 
-    private Observable<List<Question>> loadQuestionList(){
+    private Single<List<QuestionConverter>> loadQuestionList(){
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);

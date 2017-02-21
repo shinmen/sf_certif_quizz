@@ -3,9 +3,9 @@ package fr.link_value.sfcertif.sfcertifquizz.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
-import fr.link_value.sfcertif.sfcertifquizz.fragments.QuestionFragment;
-import fr.link_value.sfcertif.sfcertifquizz.fragments.RadioQuestionFragment;
+import fr.link_value.sfcertif.sfcertifquizz.utils.fragmentBuilder.QuestionFragmentFactory;
 
 /**
  * Created by jbouffard on 08/02/2017.
@@ -13,18 +13,23 @@ import fr.link_value.sfcertif.sfcertifquizz.fragments.RadioQuestionFragment;
 
 public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
-    public QuestionPagerAdapter(FragmentManager fm) {
+    private QuestionFragmentFactory fragmentFactory;
+
+    private int countQuestions;
+
+    public QuestionPagerAdapter(FragmentManager fm, QuestionFragmentFactory questionFragmentFactory, int questionsSize) {
         super(fm);
+        fragmentFactory = questionFragmentFactory;
+        countQuestions = questionsSize;
     }
 
     @Override
     public Fragment getItem(int position) {
-
-        return RadioQuestionFragment.newInstance("", "");
+        return fragmentFactory.getQuestionFragment(position);
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return countQuestions;
     }
 }
