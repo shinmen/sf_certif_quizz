@@ -11,7 +11,7 @@ import java.util.List;
 import fr.link_value.sfcertif.sfcertifquizz.R;
 import fr.link_value.sfcertif.sfcertifquizz.adapter.QuestionPagerAdapter;
 import fr.link_value.sfcertif.sfcertifquizz.fragments.OnFragmentResponseListener;
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 import fr.link_value.sfcertif.sfcertifquizz.utils.fragmentBuilder.QuestionFragmentFactory;
 import fr.link_value.sfcertif.sfcertifquizz.utils.QuestionService;
 import fr.link_value.sfcertif.sfcertifquizz.utils.RestClient;

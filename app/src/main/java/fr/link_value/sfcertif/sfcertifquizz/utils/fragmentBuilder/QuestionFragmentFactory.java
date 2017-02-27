@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import java.util.Hashtable;
 import java.util.List;
 
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * Created by jbouffard on 15/02/2017.

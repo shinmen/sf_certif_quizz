@@ -4,12 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -21,7 +19,7 @@ import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +35,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
     private static final String ARG_MORE = "radio_arg_more";
     private static final String ARG_CHOICE = "radio_arg_choice";
     private static final String ARG_ANSWER = "radio_arg_answer";
+    private static final String ARG_SUBJECT = "radio_arg_subject";
 
     private Quizz quizz;
 
@@ -66,6 +65,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         args.putString(ARG_MORE, radioQuestionConverter.getMore());
         args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) radioQuestionConverter.getChoice());
         args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) radioQuestionConverter.getAnswer());
+        args.putString(ARG_SUBJECT, radioQuestionConverter.getSubject());
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,7 +78,8 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
                     getArguments().getString(ARG_QUESTION),
                     getArguments().getString(ARG_MORE),
                     getArguments().getStringArrayList(ARG_CHOICE),
-                    getArguments().getStringArrayList(ARG_ANSWER)
+                    getArguments().getStringArrayList(ARG_ANSWER),
+                    getArguments().getString(ARG_SUBJECT)
             );
         }
     }
@@ -91,6 +92,8 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
 
         question = (TextView) view.findViewById(R.id.radio_question);
         question.setText(quizz.getQuestion());
+        TextView subject = (TextView) view.findViewById(R.id.radio_subject);
+        subject.setText(quizz.getSubject());
 
         group = (RadioGroup) view.findViewById(R.id.radio_group_question);
         List<String> choices = quizz.getChoices();

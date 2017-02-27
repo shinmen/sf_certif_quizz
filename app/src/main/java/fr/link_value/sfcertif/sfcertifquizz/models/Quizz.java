@@ -11,20 +11,23 @@ public class Quizz {
     private String more;
     private List<String> choices;
     private List<String> answers;
+    private String subject;
 
 
-    public Quizz(String question, String more, List<String> answer) {
+    public Quizz(String question, String more, List<String> answer, String subject) {
         this.question = question;
         this.more = more;
         this.answers = answer;
+        this.subject = subject;
     }
 
-    public Quizz(String question, String more, List<String> choices, List<String> answers) {
+    public Quizz(String question, String more, List<String> choices, List<String> answers, String subject) {
 
         this.question = question;
         this.more = more;
         this.choices = choices;
         this.answers = answers;
+        this.subject = subject;
     }
 
     public String getQuestion() {
@@ -41,5 +44,9 @@ public class Quizz {
 
     public List<String> getAnswers() {
         return answers;
+    }
+
+    public String getSubject() {
+        return subject;
     }
 }

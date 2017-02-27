@@ -1,11 +1,9 @@
 package fr.link_value.sfcertif.sfcertifquizz.fragments;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,7 @@ import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +32,8 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
     private static final String ARG_QUESTION = "simple_arg_question";
     private static final String ARG_MORE = "simple_arg_more";
     private static final String ARG_ANSWER = "simple_arg_answer";
+    private static final String ARG_SUBJECT = "simple_arg_subject";
+
 
     private Quizz quizz;
 
@@ -60,6 +60,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         args.putString(ARG_QUESTION, simpleQuestion.getQuestion());
         args.putString(ARG_MORE, simpleQuestion.getMore());
         args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) simpleQuestion.getAnswer());
+        args.putString(ARG_SUBJECT, simpleQuestion.getSubject());
         fragment.setArguments(args);
 
         return fragment;
@@ -72,7 +73,8 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
             quizz = new Quizz(
                     getArguments().getString(ARG_QUESTION),
                     getArguments().getString(ARG_MORE),
-                    getArguments().getStringArrayList(ARG_ANSWER)
+                    getArguments().getStringArrayList(ARG_ANSWER),
+                    getArguments().getString(ARG_SUBJECT)
             );
         }
     }
@@ -84,6 +86,8 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
 
         question = (TextView) view.findViewById(R.id.simple_question);
         question.setText(quizz.getQuestion());
+        TextView subject = (TextView) view.findViewById(R.id.simple_subject);
+        subject.setText(quizz.getSubject());
 
         answerProposition = (EditText) view.findViewById(R.id.simple_question_edit);
         answerStatus = (ImageView) view.findViewById(R.id.simple_answer_img);

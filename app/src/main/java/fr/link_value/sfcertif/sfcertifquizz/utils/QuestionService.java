@@ -2,7 +2,7 @@ package fr.link_value.sfcertif.sfcertifquizz.utils;
 
 import java.util.List;
 
-import fr.link_value.sfcertif.sfcertifquizz.utils.Converter.QuestionConverter;
+import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 

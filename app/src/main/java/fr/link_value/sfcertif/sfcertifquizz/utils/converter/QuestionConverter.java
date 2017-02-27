@@ -1,4 +1,4 @@
-package fr.link_value.sfcertif.sfcertifquizz.utils.Converter;
+package fr.link_value.sfcertif.sfcertifquizz.utils.converter;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -9,6 +9,9 @@ public class QuestionConverter {
     @SerializedName("type")
     @Expose
     private String type;
+    @SerializedName("subject")
+    @Expose
+    private String subject;
     @SerializedName("question")
     @Expose
     private String question;
@@ -60,6 +63,14 @@ public class QuestionConverter {
 
     public void setMore(String more) {
         this.more = more;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
 }
