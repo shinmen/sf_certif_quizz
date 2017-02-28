@@ -14,27 +14,28 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/SubjectFont"
             android:id="@+id/radio_subject"/>
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radio_question"
+            android:textAppearance="@style/QuizzFont"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radio_group_question"/>
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/valid_quizz_btn"
+            android:background="@drawable/ic_quizz_btn"
             android:id="@+id/radio_valid_btn"/>
 
     </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,23 +44,27 @@
         android:visibility="invisible"
         android:orientation="vertical"
         android:layout_weight="1">
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_correct_answer"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_answer_img"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_answer_img"/>
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_correct_answer"
+                android:textAppearance="@style/QuizzFont"
+                android:layout_weight="1" />
+        </LinearLayout>
         <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radio_more"
+            android:textAppearance="@style/QuizzFont"
             android:layout_weight="1" />
     </LinearLayout>
 </LinearLayout>

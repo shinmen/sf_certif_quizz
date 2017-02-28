@@ -3,11 +3,13 @@ package fr.link_value.sfcertif.sfcertifquizz.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -62,7 +64,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_QUESTION, radioQuestionConverter.getQuestion());
-        args.putString(ARG_MORE, radioQuestionConverter.getMore());
+        args.putStringArrayList(ARG_MORE, (ArrayList<String>) radioQuestionConverter.getMores());
         args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) radioQuestionConverter.getChoice());
         args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) radioQuestionConverter.getAnswer());
         args.putString(ARG_SUBJECT, radioQuestionConverter.getSubject());
@@ -76,7 +78,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         if (getArguments() != null) {
             quizz = new Quizz(
                     getArguments().getString(ARG_QUESTION),
-                    getArguments().getString(ARG_MORE),
+                    getArguments().getStringArrayList(ARG_MORE),
                     getArguments().getStringArrayList(ARG_CHOICE),
                     getArguments().getStringArrayList(ARG_ANSWER),
                     getArguments().getString(ARG_SUBJECT)
@@ -100,6 +102,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         for (int i = 0; i < choices.size(); i++) {
             String choice = choices.get(i);
             RadioButton rb = new RadioButton(getActivity());
+            rb.setTextSize(20);
             rb.setText(choice);
             group.addView(rb, i);
         }
@@ -113,9 +116,10 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         answerContainer = (LinearLayout) view.findViewById(R.id.radio_answer_container);
 
         TextView more = (TextView) view.findViewById(R.id.radio_more);
-        more.setText(quizz.getMore());
+        String mores = TextUtils.join(", ", quizz.getMores());
+        more.setText(Html.fromHtml(mores));
 
-        Button validBtn = (Button) view.findViewById(R.id.radio_valid_btn);
+        ImageButton validBtn = (ImageButton) view.findViewById(R.id.radio_valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;
@@ -157,9 +161,9 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         answerContainer.setVisibility(View.VISIBLE);
         RadioButton radio = (RadioButton) group.findViewById(group.getCheckedRadioButtonId());
         if (radio.getText().toString().equals(correctAnswer.getText().toString())) {
-            answerStatus.setImageResource(android.R.drawable.btn_plus);
+            answerStatus.setImageResource(R.drawable.ic_check_ok);
         } else {
-            answerStatus.setImageResource(android.R.drawable.btn_minus);
+            answerStatus.setImageResource(R.drawable.ic_check_nok);
         }
     }
 }

@@ -8,20 +8,20 @@ import java.util.List;
 
 public class Quizz {
     private String question;
-    private String more;
+    private List<String> more;
     private List<String> choices;
     private List<String> answers;
     private String subject;
 
 
-    public Quizz(String question, String more, List<String> answer, String subject) {
+    public Quizz(String question, List<String> more, List<String> answer, String subject) {
         this.question = question;
         this.more = more;
         this.answers = answer;
         this.subject = subject;
     }
 
-    public Quizz(String question, String more, List<String> choices, List<String> answers, String subject) {
+    public Quizz(String question, List<String> more, List<String> choices, List<String> answers, String subject) {
 
         this.question = question;
         this.more = more;
@@ -34,7 +34,7 @@ public class Quizz {
         return question;
     }
 
-    public String getMore() {
+    public List<String> getMores() {
         return more;
     }
 

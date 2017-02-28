@@ -3,12 +3,14 @@ package fr.link_value.sfcertif.sfcertifquizz.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -60,7 +62,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         CheckboxQuestionFragment fragment = new CheckboxQuestionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_QUESTION, checkboxQuestion.getQuestion());
-        args.putString(ARG_MORE, checkboxQuestion.getMore());
+        args.putStringArrayList(ARG_MORE, (ArrayList<String>) checkboxQuestion.getMores());
         args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) checkboxQuestion.getChoice());
         args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) checkboxQuestion.getAnswer());
         args.putString(ARG_SUBJECT, checkboxQuestion.getSubject());
@@ -75,7 +77,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         if (getArguments() != null) {
             quizz = new Quizz(
                     getArguments().getString(ARG_QUESTION),
-                    getArguments().getString(ARG_MORE),
+                    getArguments().getStringArrayList(ARG_MORE),
                     getArguments().getStringArrayList(ARG_CHOICE),
                     getArguments().getStringArrayList(ARG_ANSWER),
                     getArguments().getString(ARG_SUBJECT)
@@ -100,6 +102,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
             CheckBox checkBox = new CheckBox(getActivity());
             checkBox.setId(i);
             checkBox.setText(choices.get(i));
+            checkBox.setTextSize(20);
             group.setId(i);
             group.addView(checkBox);
         }
@@ -112,9 +115,10 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         answerContainer = (LinearLayout) view.findViewById(R.id.checkbox_answer_container);
 
         TextView more = (TextView) view.findViewById(R.id.checkbox_more);
-        more.setText(quizz.getMore());
+        String mores = TextUtils.join(", ", quizz.getMores());
+        more.setText(Html.fromHtml(mores));
 
-        Button validBtn = (Button) view.findViewById(R.id.checkbox_valid_btn);
+        ImageButton validBtn = (ImageButton) view.findViewById(R.id.checkbox_valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;
@@ -163,9 +167,9 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         }
         ArrayList<String> answers = new ArrayList<>(quizz.getAnswers());
         if (answers.equals(userAnswers)) {
-            answerStatus.setImageResource(android.R.drawable.btn_plus);
+            answerStatus.setImageResource(R.drawable.ic_check_ok);
         } else {
-            answerStatus.setImageResource(android.R.drawable.btn_minus);
+            answerStatus.setImageResource(R.drawable.ic_check_nok);
         }
     }
 }

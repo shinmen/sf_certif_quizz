@@ -3,12 +3,14 @@ package fr.link_value.sfcertif.sfcertifquizz.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,7 +60,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         SimpleQuestionFragment fragment = new SimpleQuestionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_QUESTION, simpleQuestion.getQuestion());
-        args.putString(ARG_MORE, simpleQuestion.getMore());
+        args.putStringArrayList(ARG_MORE, (ArrayList<String>) simpleQuestion.getMores());
         args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) simpleQuestion.getAnswer());
         args.putString(ARG_SUBJECT, simpleQuestion.getSubject());
         fragment.setArguments(args);
@@ -72,7 +74,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         if (getArguments() != null) {
             quizz = new Quizz(
                     getArguments().getString(ARG_QUESTION),
-                    getArguments().getString(ARG_MORE),
+                    getArguments().getStringArrayList(ARG_MORE),
                     getArguments().getStringArrayList(ARG_ANSWER),
                     getArguments().getString(ARG_SUBJECT)
             );
@@ -94,14 +96,15 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         answerContainer = (LinearLayout) view.findViewById(R.id.simple_answer_container);
 
         TextView more = (TextView) view.findViewById(R.id.simple_more);
-        more.setText(quizz.getMore());
+        String mores = TextUtils.join(", ", quizz.getMores());
+        more.setText(Html.fromHtml(mores));
 
         List<String> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
         correctAnswer = (TextView) view.findViewById(R.id.simple_correct_answer);
         correctAnswer.setText(answer);
 
-        Button validBtn = (Button) view.findViewById(R.id.simple_valid_btn);
+        ImageButton validBtn = (ImageButton) view.findViewById(R.id.simple_valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;
@@ -129,9 +132,9 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
     private void validateAnswer(View view) {
         answerContainer.setVisibility(View.VISIBLE);
         if (answerProposition.getText().toString().equals(correctAnswer.getText().toString())) {
-            answerStatus.setImageResource(android.R.drawable.btn_plus);
+            answerStatus.setImageResource(R.drawable.ic_check_ok);
         } else {
-            answerStatus.setImageResource(android.R.drawable.btn_minus);
+            answerStatus.setImageResource(R.drawable.ic_check_nok);
         }
     }
 

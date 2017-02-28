@@ -23,7 +23,7 @@ public class QuestionConverter {
     private List<String> answer = null;
     @SerializedName("more")
     @Expose
-    private String more;
+    private List<String> more = null;
 
     public String getType() {
         return type;
@@ -57,11 +57,11 @@ public class QuestionConverter {
         this.answer = answer;
     }
 
-    public String getMore() {
+    public List<String> getMores() {
         return more;
     }
 
-    public void setMore(String more) {
+    public void setMores(List<String> more) {
         this.more = more;
     }
 

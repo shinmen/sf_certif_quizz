@@ -15,11 +15,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/SubjectFont"
             android:id="@+id/checkbox_subject"/>
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/QuizzFont"
             android:id="@+id/checkbox_question"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
@@ -27,10 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkbox_group_question"/>
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/valid_quizz_btn"
+            android:background="@drawable/ic_quizz_btn"
             android:id="@+id/checkbox_valid_btn"
             />
     </LinearLayout>
@@ -50,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkbox_correct_answer"
+            android:textAppearance="@style/QuizzFont"
             android:layout_weight="1"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
         <ImageView
@@ -60,6 +64,7 @@
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/QuizzFont"
             android:id="@+id/checkbox_more"
             android:layout_weight="1" />
     </LinearLayout>
