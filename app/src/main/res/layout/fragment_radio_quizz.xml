@@ -60,10 +60,10 @@
                 android:layout_weight="1" />
         </LinearLayout>
         <TextView
-            android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radio_more"
+            android:autoLink="web"
             android:textAppearance="@style/QuizzFont"
             android:layout_weight="1" />
     </LinearLayout>

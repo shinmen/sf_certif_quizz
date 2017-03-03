@@ -115,8 +115,11 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         answerContainer = (LinearLayout) view.findViewById(R.id.checkbox_answer_container);
 
         TextView more = (TextView) view.findViewById(R.id.checkbox_more);
-        String mores = TextUtils.join(", ", quizz.getMores());
-        more.setText(Html.fromHtml(mores));
+        StringBuilder moreBuilder = new StringBuilder();
+        for (String item : quizz.getMores()) {
+            moreBuilder.append(item);
+        }
+        more.setText(Html.fromHtml(moreBuilder.toString()));
 
         ImageButton validBtn = (ImageButton) view.findViewById(R.id.checkbox_valid_btn);
         validBtn.setOnClickListener(this);

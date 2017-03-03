@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -115,9 +117,33 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         answerStatus = (ImageView) view.findViewById(R.id.radio_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.radio_answer_container);
 
-        TextView more = (TextView) view.findViewById(R.id.radio_more);
-        String mores = TextUtils.join(", ", quizz.getMores());
-        more.setText(Html.fromHtml(mores));
+        //TextView more = (TextView) view.findViewById(R.id.radio_more);
+        //StringBuilder moreBuilder = new StringBuilder();
+        for (String item : quizz.getMores()) {
+            TextView more = new TextView(getActivity());
+            more.setText(Html.fromHtml("<pre><code style='display:block; padding:20px;'>" +
+                    "if(true) {<br/>" +
+                    "dothis" +
+                    "}else {" +
+                    "dothat} " +
+                    "</code></pre>"));
+            more.setTextSize(20);
+            //more.setLayoutParams(Layou);
+            more.setMovementMethod(LinkMovementMethod.getInstance());
+            //answerContainer.addView(more);
+        }
+        final WebView web = new WebView(getActivity());
+
+        web.getSettings().setJavaScriptEnabled(false);
+        web.loadData(
+                "<pre><code style='display:block; padding:20px;'>if(true) \n" +
+                        " {dothis} \n" +
+                        "else {dothat}" +
+                        "</code></pre>",
+                null, null);
+        answerContainer.addView(web);
+
+        //
 
         ImageButton validBtn = (ImageButton) view.findViewById(R.id.radio_valid_btn);
         validBtn.setOnClickListener(this);
