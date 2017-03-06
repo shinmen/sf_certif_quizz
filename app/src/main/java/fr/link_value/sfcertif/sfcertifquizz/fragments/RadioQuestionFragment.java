@@ -120,30 +120,11 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         //TextView more = (TextView) view.findViewById(R.id.radio_more);
         //StringBuilder moreBuilder = new StringBuilder();
         for (String item : quizz.getMores()) {
-            TextView more = new TextView(getActivity());
-            more.setText(Html.fromHtml("<pre><code style='display:block; padding:20px;'>" +
-                    "if(true) {<br/>" +
-                    "dothis" +
-                    "}else {" +
-                    "dothat} " +
-                    "</code></pre>"));
-            more.setTextSize(20);
-            //more.setLayoutParams(Layou);
-            more.setMovementMethod(LinkMovementMethod.getInstance());
-            //answerContainer.addView(more);
+            final WebView web = new WebView(getActivity());
+            web.getSettings().setJavaScriptEnabled(false);
+            web.loadData(item, null, null);
+            answerContainer.addView(web);
         }
-        final WebView web = new WebView(getActivity());
-
-        web.getSettings().setJavaScriptEnabled(false);
-        web.loadData(
-                "<pre><code style='display:block; padding:20px;'>if(true) \n" +
-                        " {dothis} \n" +
-                        "else {dothat}" +
-                        "</code></pre>",
-                null, null);
-        answerContainer.addView(web);
-
-        //
 
         ImageButton validBtn = (ImageButton) view.findViewById(R.id.radio_valid_btn);
         validBtn.setOnClickListener(this);
@@ -186,7 +167,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
     private void validateAnswer(View view) {
         answerContainer.setVisibility(View.VISIBLE);
         RadioButton radio = (RadioButton) group.findViewById(group.getCheckedRadioButtonId());
-        if (radio.getText().toString().equals(correctAnswer.getText().toString())) {
+        if (radio != null && radio.getText().toString().equals(correctAnswer.getText().toString())) {
             answerStatus.setImageResource(R.drawable.ic_check_ok);
         } else {
             answerStatus.setImageResource(R.drawable.ic_check_nok);
