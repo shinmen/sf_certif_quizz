@@ -57,14 +57,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/radio_correct_answer"
                 android:textAppearance="@style/QuizzFont"
-                android:layout_weight="1" />
+                android:layout_weight="0.5" />
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_more"
-            android:autoLink="web"
-            android:textAppearance="@style/QuizzFont"
-            android:layout_weight="1" />
+            android:id="@+id/radio_more_container"
+            android:orientation="vertical"
+            android:layout_weight="1">
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

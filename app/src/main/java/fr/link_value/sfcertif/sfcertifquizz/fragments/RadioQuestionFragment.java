@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,6 +117,8 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         correctAnswer.setText(answer);
         answerStatus = (ImageView) view.findViewById(R.id.radio_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.radio_answer_container);
+        LinearLayout moreContainer = (LinearLayout) view.findViewById(R.id.radio_more_container);
+
 
         //TextView more = (TextView) view.findViewById(R.id.radio_more);
         //StringBuilder moreBuilder = new StringBuilder();
@@ -123,7 +126,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
             final WebView web = new WebView(getActivity());
             web.getSettings().setJavaScriptEnabled(false);
             web.loadData(item, null, null);
-            answerContainer.addView(web);
+            moreContainer.addView(web);
         }
 
         ImageButton validBtn = (ImageButton) view.findViewById(R.id.radio_valid_btn);
