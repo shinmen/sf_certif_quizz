@@ -11,8 +11,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="topic_http">HTTP</string>
-    <string name="topic_secrurity">Sécurité web</string>
+    <string name="topic_secrurity">PHP et Sécurité Web</string>
     <string name="topic_routing">Routing</string>
 </resources>

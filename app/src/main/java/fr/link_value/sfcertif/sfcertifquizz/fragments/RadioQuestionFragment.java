@@ -44,7 +44,6 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
 
     private Quizz quizz;
 
-    private OnFragmentResponseListener mListener;
     private TextView question;
     private TextView correctAnswer;
     private RadioGroup group;
@@ -61,9 +60,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
      *
      * @return A new instance of fragment RadioQuestionFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RadioQuestionFragment newInstance(QuestionConverter radioQuestionConverter) {
-        //questionConverter = radioQuestionConverter;
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_QUESTION, radioQuestionConverter.getQuestion());
@@ -135,28 +132,14 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String uri) {
-        if (mListener != null) {
-            mListener.onFragmentResponse(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentResponseListener) {
-            mListener = (OnFragmentResponseListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
         answerContainer.setVisibility(View.INVISIBLE);
     }
 

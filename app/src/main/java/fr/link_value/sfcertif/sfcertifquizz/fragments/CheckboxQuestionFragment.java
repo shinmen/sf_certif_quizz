@@ -40,7 +40,6 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
     private Quizz quizz;
 
-    private OnFragmentResponseListener mListener;
     private TextView question;
     private TextView correctAnswer;
     private TableRow group;
@@ -127,28 +126,14 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String uri) {
-        if (mListener != null) {
-            mListener.onFragmentResponse(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentResponseListener) {
-            mListener = (OnFragmentResponseListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
         answerContainer.setVisibility(View.INVISIBLE);
     }
 

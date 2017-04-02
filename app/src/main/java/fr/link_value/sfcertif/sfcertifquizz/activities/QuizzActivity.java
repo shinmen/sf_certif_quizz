@@ -1,7 +1,6 @@
 package fr.link_value.sfcertif.sfcertifquizz.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -12,10 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
-import fr.link_value.sfcertif.sfcertifquizz.adapter.FilterTopicPagerAdapter;
 import fr.link_value.sfcertif.sfcertifquizz.adapter.QuestionPagerAdapter;
 import fr.link_value.sfcertif.sfcertifquizz.fragments.FilterTopicFragment;
-import fr.link_value.sfcertif.sfcertifquizz.fragments.OnFragmentResponseListener;
 import fr.link_value.sfcertif.sfcertifquizz.utils.QuestionService;
 import fr.link_value.sfcertif.sfcertifquizz.utils.RestClient;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
@@ -29,7 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
-public class QuizzActivity extends AppCompatActivity implements OnFragmentResponseListener {
+public class QuizzActivity extends AppCompatActivity {
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -43,8 +40,6 @@ public class QuizzActivity extends AppCompatActivity implements OnFragmentRespon
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
-
-    private PagerAdapter mFilterTopicAdapter;
 
     private CompositeDisposable mComposite;
 
@@ -97,11 +92,6 @@ public class QuizzActivity extends AppCompatActivity implements OnFragmentRespon
         list.add(FilterTopicFragment.newInstance("Routing"));
 
         return list;
-    }
-
-    @Override
-    public void onFragmentResponse(String uri) {
-
     }
 
     @Override
