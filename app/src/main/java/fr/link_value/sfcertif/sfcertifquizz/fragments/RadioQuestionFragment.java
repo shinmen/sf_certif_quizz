@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
+import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
+import fr.link_value.sfcertif.sfcertifquizz.models.Choice;
+import fr.link_value.sfcertif.sfcertifquizz.models.Learn;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentResponseListener} interface
- * to handle interaction events.
  * Use the {@link RadioQuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -41,6 +41,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
     private static final String ARG_CHOICE = "radio_arg_choice";
     private static final String ARG_ANSWER = "radio_arg_answer";
     private static final String ARG_SUBJECT = "radio_arg_subject";
+    private static final String ARG_QUIZZ = "simple_arg_quizz";
 
     private Quizz quizz;
 
@@ -60,14 +61,15 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
      *
      * @return A new instance of fragment RadioQuestionFragment.
      */
-    public static RadioQuestionFragment newInstance(QuestionConverter radioQuestionConverter) {
+    public static RadioQuestionFragment newInstance(Quizz radioQuestion) {
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_QUESTION, radioQuestionConverter.getQuestion());
+        args.putParcelable(ARG_QUIZZ, radioQuestion);
+        /*args.putString(ARG_QUESTION, radioQuestionConverter.getQuestion());
         args.putStringArrayList(ARG_MORE, (ArrayList<String>) radioQuestionConverter.getMores());
-        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) radioQuestionConverter.getChoice());
-        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) radioQuestionConverter.getAnswer());
-        args.putString(ARG_SUBJECT, radioQuestionConverter.getSubject());
+        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) radioQuestionConverter.getChoices());
+        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) radioQuestionConverter.getAnswers());
+        args.putString(ARG_SUBJECT, radioQuestionConverter.getSubject());*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -76,13 +78,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            quizz = new Quizz(
-                    getArguments().getString(ARG_QUESTION),
-                    getArguments().getStringArrayList(ARG_MORE),
-                    getArguments().getStringArrayList(ARG_CHOICE),
-                    getArguments().getStringArrayList(ARG_ANSWER),
-                    getArguments().getString(ARG_SUBJECT)
-            );
+            quizz = getArguments().getParcelable(ARG_QUIZZ);
         }
     }
 
@@ -95,35 +91,35 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         question = (TextView) view.findViewById(R.id.radio_question);
         question.setText(quizz.getQuestion());
         TextView subject = (TextView) view.findViewById(R.id.radio_subject);
-        subject.setText(quizz.getSubject());
+        subject.setText(quizz.getTopic());
 
         group = (RadioGroup) view.findViewById(R.id.radio_group_question);
-        List<String> choices = quizz.getChoices();
+        List<Choice> choices = quizz.getChoices();
         for (int i = 0; i < choices.size(); i++) {
-            String choice = choices.get(i);
+            String choice = choices.get(i).getText();
             RadioButton rb = new RadioButton(getActivity());
             rb.setTextSize(20);
             rb.setText(choice);
             group.addView(rb, i);
         }
 
-        List<String> answers = quizz.getAnswers();
+        List<Answer> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
 
         correctAnswer = (TextView) view.findViewById(R.id.radio_correct_answer);
         correctAnswer.setText(answer);
         answerStatus = (ImageView) view.findViewById(R.id.radio_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.radio_answer_container);
-        LinearLayout moreContainer = (LinearLayout) view.findViewById(R.id.radio_more_container);
+        LinearLayout LessonContainer = (LinearLayout) view.findViewById(R.id.radio_more_container);
 
 
         //TextView more = (TextView) view.findViewById(R.id.radio_more);
         //StringBuilder moreBuilder = new StringBuilder();
-        for (String item : quizz.getMores()) {
+        for (Learn item : quizz.getLessons()) {
             final WebView web = new WebView(getActivity());
             web.getSettings().setJavaScriptEnabled(false);
-            web.loadData(item, null, null);
-            moreContainer.addView(web);
+            web.loadData(item.getText(), null, null);
+            LessonContainer.addView(web);
         }
 
         ImageButton validBtn = (ImageButton) view.findViewById(R.id.radio_valid_btn);

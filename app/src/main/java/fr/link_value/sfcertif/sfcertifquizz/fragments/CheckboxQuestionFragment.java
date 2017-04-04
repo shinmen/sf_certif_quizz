@@ -20,13 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
+import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
+import fr.link_value.sfcertif.sfcertifquizz.models.Choice;
+import fr.link_value.sfcertif.sfcertifquizz.models.Learn;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnFragmentResponseListener} interface
  * to handle interaction events.
  * Use the {@link CheckboxQuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -37,6 +39,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
     private static final String ARG_CHOICE = "checkbox_arg_choice";
     private static final String ARG_ANSWER = "checkbox_arg_answer";
     private static final String ARG_SUBJECT = "checkbox_arg_subject";
+    private static final String ARG_QUIZZ = "checkbox_arg_quizz";
 
     private Quizz quizz;
 
@@ -57,15 +60,17 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
      * @return A new instance of fragment CheckboxQuestionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CheckboxQuestionFragment newInstance(QuestionConverter checkboxQuestion) {
+    public static CheckboxQuestionFragment newInstance(Quizz checkboxQuestion) {
         CheckboxQuestionFragment fragment = new CheckboxQuestionFragment();
         Bundle args = new Bundle();
+        args.putParcelable(ARG_QUIZZ, checkboxQuestion);
+        /*
         args.putString(ARG_QUESTION, checkboxQuestion.getQuestion());
         args.putStringArrayList(ARG_MORE, (ArrayList<String>) checkboxQuestion.getMores());
-        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) checkboxQuestion.getChoice());
-        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) checkboxQuestion.getAnswer());
+        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) checkboxQuestion.getChoices());
+        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) checkboxQuestion.getAnswers());
         args.putString(ARG_SUBJECT, checkboxQuestion.getSubject());
-        fragment.setArguments(args);
+        fragment.setArguments(args);*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,13 +79,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            quizz = new Quizz(
-                    getArguments().getString(ARG_QUESTION),
-                    getArguments().getStringArrayList(ARG_MORE),
-                    getArguments().getStringArrayList(ARG_CHOICE),
-                    getArguments().getStringArrayList(ARG_ANSWER),
-                    getArguments().getString(ARG_SUBJECT)
-            );
+            quizz = getArguments().getParcelable(ARG_QUIZZ);
         }
     }
 
@@ -93,19 +92,19 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         question = (TextView) view.findViewById(R.id.checkbox_question);
         question.setText(quizz.getQuestion());
         TextView subject = (TextView) view.findViewById(R.id.checkbox_subject);
-        subject.setText(quizz.getSubject());
+        subject.setText(quizz.getTopic());
 
         group = (TableRow) view.findViewById(R.id.checkbox_group_question);
-        ArrayList<String> choices = (ArrayList<String>) quizz.getChoices();
+        ArrayList<Choice> choices = (ArrayList<Choice>) quizz.getChoices();
         for (int i = 0; i < choices.size(); i++) {
             CheckBox checkBox = new CheckBox(getActivity());
             checkBox.setId(i);
-            checkBox.setText(choices.get(i));
+            checkBox.setText(choices.get(i).getText());
             checkBox.setTextSize(20);
             group.setId(i);
             group.addView(checkBox);
         }
-        List<String> answers = quizz.getAnswers();
+        List<Answer> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
 
         correctAnswer = (TextView) view.findViewById(R.id.checkbox_correct_answer);
@@ -115,8 +114,8 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
         TextView more = (TextView) view.findViewById(R.id.checkbox_more);
         StringBuilder moreBuilder = new StringBuilder();
-        for (String item : quizz.getMores()) {
-            moreBuilder.append(item);
+        for (Learn item : quizz.getLessons()) {
+            moreBuilder.append(item.getText());
         }
         more.setText(Html.fromHtml(moreBuilder.toString()));
 
@@ -146,14 +145,14 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
     private void validateAnswer(View view) {
         answerContainer.setVisibility(View.VISIBLE);
-        ArrayList<String> userAnswers = new ArrayList<>();
+        ArrayList<Answer> userAnswers = new ArrayList<Answer>();
         for (int i = 0; i< group.getChildCount(); i++) {
             CheckBox checkbox = (CheckBox) group.getChildAt(i);
             if (checkbox.isChecked()) {
-                userAnswers.add(checkbox.getText().toString());
+                userAnswers.add(new Answer(checkbox.getText().toString()));
             }
         }
-        ArrayList<String> answers = new ArrayList<>(quizz.getAnswers());
+        ArrayList<Answer> answers = new ArrayList<Answer>(quizz.getAnswers());
         if (answers.equals(userAnswers)) {
             answerStatus.setImageResource(R.drawable.ic_check_ok);
         } else {

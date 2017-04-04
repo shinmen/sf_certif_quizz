@@ -4,6 +4,9 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+
 public class QuestionConverter {
 
     @SerializedName("type")
@@ -41,7 +44,7 @@ public class QuestionConverter {
         this.question = question;
     }
 
-    public List<String> getChoice() {
+    public List<String> getChoices() {
         return choice;
     }
 
@@ -49,7 +52,7 @@ public class QuestionConverter {
         this.choice = choice;
     }
 
-    public List<String> getAnswer() {
+    public List<String> getAnswers() {
         return answer;
     }
 

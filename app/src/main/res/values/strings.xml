@@ -1,11 +1,8 @@
 <resources>
     <string name="app_name">SFCertifQuizz</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="valid_quizz_btn">Valider</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_quizzy">QuizzyActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

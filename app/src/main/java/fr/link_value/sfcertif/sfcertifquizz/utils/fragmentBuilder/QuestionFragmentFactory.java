@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import java.util.Hashtable;
 import java.util.List;
 
+import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
@@ -13,21 +14,21 @@ import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
  */
 
 public class QuestionFragmentFactory {
-    private List<QuestionConverter> questionConverters;
+    private List<Quizz> quizzs;
     private Hashtable<String,QuestionFragmentBuilder> typeToFragmentBuilder;
 
-    public QuestionFragmentFactory(List<QuestionConverter> list) {
-        questionConverters = list;
-        typeToFragmentBuilder = new Hashtable<>();
+    public QuestionFragmentFactory(List<Quizz> list) {
+        quizzs = list;
+        typeToFragmentBuilder = new Hashtable<String, QuestionFragmentBuilder>();
         typeToFragmentBuilder.put("radio" , new RadioQuestionFragmentBuilder());
         typeToFragmentBuilder.put("checkbox", new CheckboxQuestionFragmentBuilder());
         typeToFragmentBuilder.put("simple", new SimpleQuestionFragmentBuilder());
     }
 
     public Fragment getQuestionFragment(int position) {
-        QuestionConverter questionConverter = questionConverters.get(position);
-        QuestionFragmentBuilder fragmentBuilder = typeToFragmentBuilder.get(questionConverter.getType());
+        Quizz quizz = quizzs.get(position);
+        QuestionFragmentBuilder fragmentBuilder = typeToFragmentBuilder.get(quizz.getQuestionType());
 
-        return fragmentBuilder.getFragment(questionConverter);
+        return fragmentBuilder.getFragment(quizz);
     }
 }

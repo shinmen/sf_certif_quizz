@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
+import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnFragmentResponseListener} interface
  * to handle interaction events.
  * Use the {@link SimpleQuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -35,6 +35,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
     private static final String ARG_MORE = "simple_arg_more";
     private static final String ARG_ANSWER = "simple_arg_answer";
     private static final String ARG_SUBJECT = "simple_arg_subject";
+    private static final String ARG_QUIZZ = "simple_arg_quizz";
 
 
     private Quizz quizz;
@@ -53,16 +54,16 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment QuestionFragment.
+     * @return A new instance of fragment SimpleQuestionFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static SimpleQuestionFragment newInstance(QuestionConverter simpleQuestion) {
+    public static SimpleQuestionFragment newInstance(Quizz simpleQuestion) {
         SimpleQuestionFragment fragment = new SimpleQuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_QUESTION, simpleQuestion.getQuestion());
-        args.putStringArrayList(ARG_MORE, (ArrayList<String>) simpleQuestion.getMores());
-        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) simpleQuestion.getAnswer());
-        args.putString(ARG_SUBJECT, simpleQuestion.getSubject());
+        args.putParcelable(ARG_QUIZZ, simpleQuestion);
+        /*args.putString(ARG_QUESTION, simpleQuestion.getQuestion());
+        args.putStringArrayList(ARG_MORE, (ArrayList<String>) simpleQuestion.getLessons());
+        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) simpleQuestion.getAnswers());
+        args.putString(ARG_SUBJECT, simpleQuestion.getTopic());*/
         fragment.setArguments(args);
 
         return fragment;
@@ -72,12 +73,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            quizz = new Quizz(
-                    getArguments().getString(ARG_QUESTION),
-                    getArguments().getStringArrayList(ARG_MORE),
-                    getArguments().getStringArrayList(ARG_ANSWER),
-                    getArguments().getString(ARG_SUBJECT)
-            );
+            quizz = getArguments().getParcelable(ARG_QUIZZ);
         }
     }
 
@@ -89,17 +85,17 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         question = (TextView) view.findViewById(R.id.simple_question);
         question.setText(quizz.getQuestion());
         TextView subject = (TextView) view.findViewById(R.id.simple_subject);
-        subject.setText(quizz.getSubject());
+        subject.setText(quizz.getTopic());
 
         answerProposition = (EditText) view.findViewById(R.id.simple_question_edit);
         answerStatus = (ImageView) view.findViewById(R.id.simple_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.simple_answer_container);
 
         TextView more = (TextView) view.findViewById(R.id.simple_more);
-        String mores = TextUtils.join(", ", quizz.getMores());
+        String mores = TextUtils.join(", ", quizz.getLessons());
         more.setText(Html.fromHtml(mores));
 
-        List<String> answers = quizz.getAnswers();
+        List<Answer> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
         correctAnswer = (TextView) view.findViewById(R.id.simple_correct_answer);
         correctAnswer.setText(answer);

@@ -3,6 +3,7 @@ package fr.link_value.sfcertif.sfcertifquizz.utils.fragmentBuilder;
 import android.support.v4.app.Fragment;
 
 import fr.link_value.sfcertif.sfcertifquizz.fragments.RadioQuestionFragment;
+import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
@@ -11,8 +12,8 @@ import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 public class RadioQuestionFragmentBuilder implements QuestionFragmentBuilder {
     @Override
-    public Fragment getFragment(QuestionConverter questionConverter) {
+    public Fragment getFragment(Quizz quizz) {
 
-        return RadioQuestionFragment.newInstance(questionConverter);
+        return RadioQuestionFragment.newInstance(quizz);
     }
 }
