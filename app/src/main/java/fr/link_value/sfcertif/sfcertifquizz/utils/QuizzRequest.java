@@ -1,20 +1,18 @@
 package fr.link_value.sfcertif.sfcertifquizz.utils;
 
+import android.util.Log;
+
 import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
-import fr.link_value.sfcertif.sfcertifquizz.models.Choice;
-import fr.link_value.sfcertif.sfcertifquizz.models.Learn;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -25,7 +23,7 @@ import retrofit2.Retrofit;
 
 public class QuizzRequest {
 
-    public static Flowable<List<Quizz>> getQuestionList(final Realm realm) {
+    public static Flowable<List<Quizz>> getQuestionList() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -49,19 +47,19 @@ public class QuizzRequest {
                                         String type = questionConverter.getType();
                                         String question = questionConverter.getQuestion();
                                         String topic = questionConverter.getSubject();
-                                        List<Learn> mores = new ArrayList<Learn>();
-                                        for (String more:questionConverter.getMores()) {
-                                            mores.add(new Learn(more));
+                                        List<String> lessons = new ArrayList<>();
+                                        for (String lesson:questionConverter.getMores()) {
+                                            lessons.add(lesson);
                                         }
-                                        List<Choice> choices = new ArrayList<Choice>();
+                                        List<String> choices = new ArrayList<>();
                                         for (String choice:questionConverter.getChoices()) {
-                                            choices.add(new Choice(choice));
+                                            choices.add(choice);
                                         }
-                                        List<Answer> answers = new ArrayList<Answer>();
-                                        for (String answer:questionConverter.getChoices()) {
-                                            answers.add(new Answer(answer));
+                                        List<String> answers = new ArrayList<>();
+                                        for (String answer:questionConverter.getAnswers()) {
+                                            answers.add(answer);
                                         }
-                                        return new Quizz(type, question, mores, choices, answers, topic);
+                                        return new Quizz(type, question, lessons, choices, answers, topic);
                                     }
                                 })
                                 .toList()
@@ -70,7 +68,10 @@ public class QuizzRequest {
                 }).flatMap(new Function<List<Quizz>, Flowable<List<Quizz>>>() {
                     @Override
                     public Flowable<List<Quizz>> apply(List<Quizz> quizzs) throws Exception {
-                        return DbQuizzStorage.cacheQuizzes(Flowable.just(quizzs), DbQuizzStorage.getRealm(realm));
+                        CacheDisk cache = new CacheDisk();
+                        Log.d("quizzs", "http");
+
+                        return cache.cacheQuizz(quizzs);
                     }
                 });
 

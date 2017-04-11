@@ -23,11 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
-import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
-import fr.link_value.sfcertif.sfcertifquizz.models.Choice;
-import fr.link_value.sfcertif.sfcertifquizz.models.Learn;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
-import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,16 +91,16 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         subject.setText(quizz.getTopic());
 
         group = (RadioGroup) view.findViewById(R.id.radio_group_question);
-        List<Choice> choices = quizz.getChoices();
+        List<String> choices = quizz.getChoices();
         for (int i = 0; i < choices.size(); i++) {
-            String choice = choices.get(i).getText();
+            String choice = choices.get(i);
             RadioButton rb = new RadioButton(getActivity());
             rb.setTextSize(20);
             rb.setText(choice);
             group.addView(rb, i);
         }
 
-        List<Answer> answers = quizz.getAnswers();
+        List<String> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
 
         correctAnswer = (TextView) view.findViewById(R.id.radio_correct_answer);
@@ -115,10 +112,10 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
 
         //TextView more = (TextView) view.findViewById(R.id.radio_more);
         //StringBuilder moreBuilder = new StringBuilder();
-        for (Learn item : quizz.getLessons()) {
+        for (String item : quizz.getLessons()) {
             final WebView web = new WebView(getActivity());
             web.getSettings().setJavaScriptEnabled(false);
-            web.loadData(item.getText(), null, null);
+            web.loadData(item, null, null);
             LessonContainer.addView(web);
         }
 

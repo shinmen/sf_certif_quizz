@@ -21,7 +21,7 @@ public class RestClient {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(baseUrl)
-                .client(httpClient.build())
+                //.client(httpClient.build())
                 .build();
 
         return retrofit;

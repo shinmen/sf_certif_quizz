@@ -1,54 +1,43 @@
 package fr.link_value.sfcertif.sfcertifquizz.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
 import fr.link_value.sfcertif.sfcertifquizz.adapter.QuestionPagerAdapter;
-import fr.link_value.sfcertif.sfcertifquizz.fragments.FilterTopicFragment;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
-import fr.link_value.sfcertif.sfcertifquizz.utils.DbQuizzStorage;
+import fr.link_value.sfcertif.sfcertifquizz.utils.CacheDisk;
 import fr.link_value.sfcertif.sfcertifquizz.utils.QuestionService;
 import fr.link_value.sfcertif.sfcertifquizz.utils.QuizzRequest;
 import fr.link_value.sfcertif.sfcertifquizz.utils.RestClient;
 import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 import fr.link_value.sfcertif.sfcertifquizz.utils.fragmentBuilder.QuestionFragmentFactory;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
-import io.reactivex.SingleObserver;
-import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
-import io.reactivex.observers.ResourceSingleObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
-import io.realm.Realm;
-import io.realm.RealmResults;
+import io.reactivex.subscribers.ResourceSubscriber;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -69,7 +58,6 @@ public class QuizzActivity extends AppCompatActivity
 
     private CompositeDisposable mComposite;
 
-    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,19 +82,6 @@ public class QuizzActivity extends AppCompatActivity
                 return true;
             }
         };
-
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
-
-       /* Realm.init(this);
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        QuestionConverter q = realm.createObject(QuestionConverter.class);
-        q.setQuestion("what?");
-        realm.commitTransaction();
-        RealmResults<QuestionConverter> result = realm.where(QuestionConverter.class).findAll();
-        QuestionConverter qres = result.first();
-        Log.d("qres", qres.getQuestion());*/
 
         load(filter);
     }
@@ -156,7 +131,7 @@ public class QuizzActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         mComposite.dispose();
-        realm.deleteAll();
+        CacheDisk.getCache().remove(CacheDisk.QUIZZ_JSON);
     }
 
     private Publisher<List<QuestionConverter>> loadQuestionList(){
@@ -177,14 +152,58 @@ public class QuizzActivity extends AppCompatActivity
 
     private void load(final Predicate<QuestionConverter> filter) {
         mComposite = new CompositeDisposable();
-
-
-        Flowable.concat(DbQuizzStorage.getCachedQuizzes(realm), QuizzRequest.getQuestionList(realm))
+        /*QuizzRequest.getQuestionList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSubscriber<List<Quizz>>() {
+        .subscribe(new ResourceSubscriber<List<Quizz>>() {
+            @Override
+            public void onNext(List<Quizz> quizzs) {
+                Log.d("request", String.valueOf(quizzs.size()));
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onComplete() {
+                CacheDisk.getQuizzCacheDisk()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new ResourceSubscriber<List<Quizz>>() {
+                            @Override
+                            public void onNext(List<Quizz> quizzs) {
+                                Log.d("from cache", quizzs.get(1).getQuestion());
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+                                t.printStackTrace();
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        });*/
+
+        Flowable.concat(CacheDisk.getQuizzCacheDisk(), QuizzRequest.getQuestionList())
+                .skipWhile(new Predicate<List<Quizz>>() {
                     @Override
-                    public void onNext(List<Quizz> quizzs) {
+                    public boolean test(List<Quizz> o) throws Exception {
+                        return o.size() == 0;
+                    }
+                })
+                .first(new ArrayList<Quizz>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<List<Quizz>>() {
+                    @Override
+                    public void onSuccess(List<Quizz> quizzs) {
+                        Log.d("concat", String.valueOf(quizzs.size()));
                         QuestionFragmentFactory fragmentFactory = new QuestionFragmentFactory(quizzs);
                         // Instantiate a ViewPager and a PagerAdapter.
                         mPagerQuizz = (ViewPager) findViewById(R.id.pager_question);
@@ -193,16 +212,35 @@ public class QuizzActivity extends AppCompatActivity
                     }
 
                     @Override
-                    public void onError(Throwable t) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                    public void onError(Throwable e) {
+                        Log.d("error", e.getMessage());
+                        e.printStackTrace();
                     }
                 })
                 ;
+
+        /*Flowable.concat(QuizzRequest.getQuestionList(), CacheDisk.getQuizzCacheDisk())
+                .first(new ArrayList<Quizz>())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<List<Quizz>>() {
+                    @Override
+                    public void onSuccess(List<Quizz> quizzs) {
+                        Log.d("concat", String.valueOf(quizzs.size()));
+                        QuestionFragmentFactory fragmentFactory = new QuestionFragmentFactory(quizzs);
+                        // Instantiate a ViewPager and a PagerAdapter.
+                        mPagerQuizz = (ViewPager) findViewById(R.id.pager_question);
+                        mPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), fragmentFactory, quizzs.size());
+                        mPagerQuizz.setAdapter(mPagerAdapter);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("error", e.getMessage());
+                        e.printStackTrace();
+                    }
+                })
+        ;*/
 
 
         /*mComposite.add(Flowable.concat(loadQuestionList().fromItera)

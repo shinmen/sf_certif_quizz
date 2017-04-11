@@ -1,11 +1,9 @@
 package fr.link_value.sfcertif.sfcertifquizz.utils.converter;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import io.realm.RealmModel;
-import io.realm.RealmObject;
 
 public class QuestionConverter {
 
@@ -20,13 +18,13 @@ public class QuestionConverter {
     private String question;
     @SerializedName("choice")
     @Expose
-    private List<String> choice = null;
+    private List<String> choice = new ArrayList<>();
     @SerializedName("answer")
     @Expose
-    private List<String> answer = null;
+    private List<String> answer = new ArrayList<>();
     @SerializedName("more")
     @Expose
-    private List<String> more = null;
+    private List<String> more = new ArrayList<>();
 
     public String getType() {
         return type;

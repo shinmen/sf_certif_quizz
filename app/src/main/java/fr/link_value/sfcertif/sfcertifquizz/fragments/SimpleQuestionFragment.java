@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
-import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
-import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +93,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         String mores = TextUtils.join(", ", quizz.getLessons());
         more.setText(Html.fromHtml(mores));
 
-        List<Answer> answers = quizz.getAnswers();
+        List<String> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
         correctAnswer = (TextView) view.findViewById(R.id.simple_correct_answer);
         correctAnswer.setText(answer);

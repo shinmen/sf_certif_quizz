@@ -20,11 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.link_value.sfcertif.sfcertifquizz.R;
-import fr.link_value.sfcertif.sfcertifquizz.models.Answer;
-import fr.link_value.sfcertif.sfcertifquizz.models.Choice;
-import fr.link_value.sfcertif.sfcertifquizz.models.Learn;
+
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
-import fr.link_value.sfcertif.sfcertifquizz.utils.converter.QuestionConverter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,16 +92,17 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         subject.setText(quizz.getTopic());
 
         group = (TableRow) view.findViewById(R.id.checkbox_group_question);
-        ArrayList<Choice> choices = (ArrayList<Choice>) quizz.getChoices();
+        List<String> choices = quizz.getChoices();
+
         for (int i = 0; i < choices.size(); i++) {
             CheckBox checkBox = new CheckBox(getActivity());
             checkBox.setId(i);
-            checkBox.setText(choices.get(i).getText());
+            checkBox.setText(choices.get(i));
             checkBox.setTextSize(20);
             group.setId(i);
             group.addView(checkBox);
         }
-        List<Answer> answers = quizz.getAnswers();
+        List<String> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
 
         correctAnswer = (TextView) view.findViewById(R.id.checkbox_correct_answer);
@@ -114,8 +112,8 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
         TextView more = (TextView) view.findViewById(R.id.checkbox_more);
         StringBuilder moreBuilder = new StringBuilder();
-        for (Learn item : quizz.getLessons()) {
-            moreBuilder.append(item.getText());
+        for (String item : quizz.getLessons()) {
+            moreBuilder.append(item);
         }
         more.setText(Html.fromHtml(moreBuilder.toString()));
 
@@ -145,14 +143,14 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
     private void validateAnswer(View view) {
         answerContainer.setVisibility(View.VISIBLE);
-        ArrayList<Answer> userAnswers = new ArrayList<Answer>();
+        ArrayList<String> userAnswers = new ArrayList<>();
         for (int i = 0; i< group.getChildCount(); i++) {
             CheckBox checkbox = (CheckBox) group.getChildAt(i);
             if (checkbox.isChecked()) {
-                userAnswers.add(new Answer(checkbox.getText().toString()));
+                userAnswers.add(checkbox.getText().toString());
             }
         }
-        ArrayList<Answer> answers = new ArrayList<Answer>(quizz.getAnswers());
+        List<String> answers = quizz.getAnswers();
         if (answers.equals(userAnswers)) {
             answerStatus.setImageResource(R.drawable.ic_check_ok);
         } else {
