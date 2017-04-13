@@ -68,10 +68,7 @@ public class QuizzRequest {
                 }).flatMap(new Function<List<Quizz>, Flowable<List<Quizz>>>() {
                     @Override
                     public Flowable<List<Quizz>> apply(List<Quizz> quizzs) throws Exception {
-                        CacheDisk cache = new CacheDisk();
-                        Log.d("quizzs", "http");
-
-                        return cache.cacheQuizz(quizzs);
+                        return MemoryCache.cacheQuizzInMemory(quizzs);
                     }
                 });
 

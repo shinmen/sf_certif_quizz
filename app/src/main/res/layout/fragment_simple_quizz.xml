@@ -28,11 +28,10 @@
             android:textAppearance="@style/QuizzFont"
             android:id="@+id/simple_question_edit"/>
 
-        <ImageButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/valid_quizz_btn"
-            android:background="@drawable/ic_quizz_btn"
             android:id="@+id/simple_valid_btn"/>
     </LinearLayout>
 

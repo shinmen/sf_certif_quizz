@@ -1,14 +1,26 @@
 <resources>
     <string name="app_name">SFCertifQuizz</string>
+    <string name="title_activity_quizz">QuizzActivity</string>
 
+    <string name="navigation_drawer_open">Ouvrir onglet de navigation</string>
+    <string name="navigation_drawer_close">Fermer onglet de navigation</string>
     <string name="valid_quizz_btn">Valider</string>
-
-    <string name="title_activity_quizzy">QuizzyActivity</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="filter_topic">Filtre sujets</string>
 
     <string name="topic_http">HTTP</string>
-    <string name="topic_secrurity">PHP et Sécurité Web</string>
-    <string name="topic_routing">Routing</string>
+    <string name="topic_php">PHP et Sécurité Web</string>
+    <string name="topic_architecture">Architecture de Symfony</string>
+    <string name="topic_standardisation">Standardisation</string>
+    <string name="topic_bundles">Bundles</string>
+    <string name="topic_controllers">Contrôleurs</string>
+    <string name="topic_routing">Routage</string>
+    <string name="topic_templating">Templating avec Twig</string>
+    <string name="topic_form">Formulaires</string>
+    <string name="topic_validator">Validation de données</string>
+    <string name="topic_dependency_injection">Injection de dépendance</string>
+    <string name="topic_security">Sécurité</string>
+    <string name="topic_http_cache">Cache HTTP</string>
+    <string name="topic_console">Console</string>
+    <string name="topic_tests">Tests Automatisés</string>
+    <string name="topic_others">Divers</string>
 </resources>

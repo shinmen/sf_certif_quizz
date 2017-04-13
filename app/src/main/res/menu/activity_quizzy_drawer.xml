@@ -7,12 +7,64 @@
             android:icon="@android:drawable/ic_menu_help"
             android:title="@string/topic_http" />
         <item
-            android:id="@+id/nav_security"
+            android:id="@+id/nav_php"
             android:icon="@android:drawable/ic_menu_help"
-            android:title="@string/topic_secrurity" />
+            android:title="@string/topic_php" />
+        <item
+            android:id="@+id/nav_architecture"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_architecture" />
+        <item
+            android:id="@+id/nav_standard"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_standardisation" />
+        <item
+            android:id="@+id/nav_bundles"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_bundles" />
+        <item
+            android:id="@+id/nav_controller"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_controllers" />
         <item
             android:id="@+id/nav_routing"
             android:icon="@android:drawable/ic_menu_help"
             android:title="@string/topic_routing" />
+        <item
+            android:id="@+id/nav_templating"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_templating" />
+        <item
+            android:id="@+id/nav_form"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_form" />
+        <item
+            android:id="@+id/nav_validator"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_validator" />
+        <item
+            android:id="@+id/nav_dep_injection"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_dependency_injection" />
+        <item
+            android:id="@+id/nav_security"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_security" />
+        <item
+            android:id="@+id/nav_cache"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_http_cache" />
+        <item
+            android:id="@+id/nav_console"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_console" />
+        <item
+            android:id="@+id/nav_tests"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_tests" />
+        <item
+            android:id="@+id/nav_others"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="@string/topic_others" />
     </group>
 </menu>

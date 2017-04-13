@@ -28,12 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/radio_group_question"/>
-        <ImageButton
+
+        <Button
+            android:id="@+id/radio_valid_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/valid_quizz_btn"
-            android:background="@drawable/ic_quizz_btn"
-            android:id="@+id/radio_valid_btn"/>
+            />
 
     </LinearLayout>
 

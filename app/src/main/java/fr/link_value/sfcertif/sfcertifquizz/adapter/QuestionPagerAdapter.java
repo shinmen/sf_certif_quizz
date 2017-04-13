@@ -16,10 +16,14 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
 
     private int countQuestions;
 
-    public QuestionPagerAdapter(FragmentManager fm, QuestionFragmentFactory questionFragmentFactory, int questionsSize) {
+    public QuestionPagerAdapter(FragmentManager fm, QuestionFragmentFactory questionFragmentFactory, int quizzSize) {
         super(fm);
         fragmentFactory = questionFragmentFactory;
-        countQuestions = questionsSize;
+        countQuestions = quizzSize;
+    }
+
+    public void refreshFragmentFactory(QuestionFragmentFactory questionFragmentFactory) {
+        fragmentFactory = questionFragmentFactory;
     }
 
     @Override

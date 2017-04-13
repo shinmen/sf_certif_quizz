@@ -33,11 +33,6 @@ import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
  */
 public class RadioQuestionFragment extends Fragment implements View.OnClickListener {
 
-    private static final String ARG_QUESTION = "radio_arg_question";
-    private static final String ARG_MORE = "radio_arg_more";
-    private static final String ARG_CHOICE = "radio_arg_choice";
-    private static final String ARG_ANSWER = "radio_arg_answer";
-    private static final String ARG_SUBJECT = "radio_arg_subject";
     private static final String ARG_QUIZZ = "simple_arg_quizz";
 
     private Quizz quizz;
@@ -62,11 +57,6 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         RadioQuestionFragment fragment = new RadioQuestionFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_QUIZZ, radioQuestion);
-        /*args.putString(ARG_QUESTION, radioQuestionConverter.getQuestion());
-        args.putStringArrayList(ARG_MORE, (ArrayList<String>) radioQuestionConverter.getMores());
-        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) radioQuestionConverter.getChoices());
-        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) radioQuestionConverter.getAnswers());
-        args.putString(ARG_SUBJECT, radioQuestionConverter.getSubject());*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -109,9 +99,6 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         answerContainer = (LinearLayout) view.findViewById(R.id.radio_answer_container);
         LinearLayout LessonContainer = (LinearLayout) view.findViewById(R.id.radio_more_container);
 
-
-        //TextView more = (TextView) view.findViewById(R.id.radio_more);
-        //StringBuilder moreBuilder = new StringBuilder();
         for (String item : quizz.getLessons()) {
             final WebView web = new WebView(getActivity());
             web.getSettings().setJavaScriptEnabled(false);
@@ -119,7 +106,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
             LessonContainer.addView(web);
         }
 
-        ImageButton validBtn = (ImageButton) view.findViewById(R.id.radio_valid_btn);
+        Button validBtn = (Button) view.findViewById(R.id.radio_valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;

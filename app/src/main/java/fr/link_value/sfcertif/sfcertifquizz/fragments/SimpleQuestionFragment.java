@@ -29,10 +29,7 @@ import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
  * create an instance of this fragment.
  */
 public class SimpleQuestionFragment extends Fragment implements View.OnClickListener {
-    private static final String ARG_QUESTION = "simple_arg_question";
-    private static final String ARG_MORE = "simple_arg_more";
-    private static final String ARG_ANSWER = "simple_arg_answer";
-    private static final String ARG_SUBJECT = "simple_arg_subject";
+
     private static final String ARG_QUIZZ = "simple_arg_quizz";
 
 
@@ -58,10 +55,6 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         SimpleQuestionFragment fragment = new SimpleQuestionFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_QUIZZ, simpleQuestion);
-        /*args.putString(ARG_QUESTION, simpleQuestion.getQuestion());
-        args.putStringArrayList(ARG_MORE, (ArrayList<String>) simpleQuestion.getLessons());
-        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) simpleQuestion.getAnswers());
-        args.putString(ARG_SUBJECT, simpleQuestion.getTopic());*/
         fragment.setArguments(args);
 
         return fragment;
@@ -98,7 +91,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         correctAnswer = (TextView) view.findViewById(R.id.simple_correct_answer);
         correctAnswer.setText(answer);
 
-        ImageButton validBtn = (ImageButton) view.findViewById(R.id.simple_valid_btn);
+        Button validBtn = (Button) view.findViewById(R.id.simple_valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;

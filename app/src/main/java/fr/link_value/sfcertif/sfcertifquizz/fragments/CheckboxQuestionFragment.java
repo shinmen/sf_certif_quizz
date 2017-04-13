@@ -31,11 +31,7 @@ import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
  * create an instance of this fragment.
  */
 public class CheckboxQuestionFragment extends Fragment implements View.OnClickListener {
-    private static final String ARG_QUESTION = "checkbox_arg_question";
-    private static final String ARG_MORE = "checkbox_arg_more";
-    private static final String ARG_CHOICE = "checkbox_arg_choice";
-    private static final String ARG_ANSWER = "checkbox_arg_answer";
-    private static final String ARG_SUBJECT = "checkbox_arg_subject";
+
     private static final String ARG_QUIZZ = "checkbox_arg_quizz";
 
     private Quizz quizz;
@@ -61,13 +57,6 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         CheckboxQuestionFragment fragment = new CheckboxQuestionFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_QUIZZ, checkboxQuestion);
-        /*
-        args.putString(ARG_QUESTION, checkboxQuestion.getQuestion());
-        args.putStringArrayList(ARG_MORE, (ArrayList<String>) checkboxQuestion.getMores());
-        args.putStringArrayList(ARG_CHOICE, (ArrayList<String>) checkboxQuestion.getChoices());
-        args.putStringArrayList(ARG_ANSWER, (ArrayList<String>) checkboxQuestion.getAnswers());
-        args.putString(ARG_SUBJECT, checkboxQuestion.getSubject());
-        fragment.setArguments(args);*/
         fragment.setArguments(args);
         return fragment;
     }
@@ -117,7 +106,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         }
         more.setText(Html.fromHtml(moreBuilder.toString()));
 
-        ImageButton validBtn = (ImageButton) view.findViewById(R.id.checkbox_valid_btn);
+        Button validBtn = (Button) view.findViewById(R.id.checkbox_valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;

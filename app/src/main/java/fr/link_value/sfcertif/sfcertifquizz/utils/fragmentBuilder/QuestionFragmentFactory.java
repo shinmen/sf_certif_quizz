@@ -19,7 +19,7 @@ public class QuestionFragmentFactory {
 
     public QuestionFragmentFactory(List<Quizz> list) {
         quizzs = list;
-        typeToFragmentBuilder = new Hashtable<String, QuestionFragmentBuilder>();
+        typeToFragmentBuilder = new Hashtable<>();
         typeToFragmentBuilder.put("radio" , new RadioQuestionFragmentBuilder());
         typeToFragmentBuilder.put("checkbox", new CheckboxQuestionFragmentBuilder());
         typeToFragmentBuilder.put("simple", new SimpleQuestionFragmentBuilder());
