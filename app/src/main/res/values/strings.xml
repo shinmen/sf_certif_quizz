@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SFCertifQuizz</string>
+    <string name="app_name">Symfony Certif Quizz</string>
     <string name="title_activity_quizz">QuizzActivity</string>
 
     <string name="navigation_drawer_open">Ouvrir onglet de navigation</string>
@@ -7,6 +7,7 @@
     <string name="valid_quizz_btn">Valider</string>
     <string name="filter_topic">Filtre sujets</string>
 
+    <string name="topic_all">Tous</string>
     <string name="topic_http">HTTP</string>
     <string name="topic_php">PHP et Sécurité Web</string>
     <string name="topic_architecture">Architecture de Symfony</string>

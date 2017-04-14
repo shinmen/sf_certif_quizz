@@ -160,6 +160,9 @@ public class QuizzActivity extends AppCompatActivity
         Predicate<Quizz> filter = new Predicate<Quizz>() {
             @Override
             public boolean test(Quizz quizz) throws Exception {
+                if (topic.equalsIgnoreCase(getString(R.string.topic_all))) {
+                    return true;
+                }
                 return quizz.getTopic().equalsIgnoreCase(topic);
             }
         };

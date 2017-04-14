@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -106,7 +107,8 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         }
         more.setText(Html.fromHtml(moreBuilder.toString()));
 
-        Button validBtn = (Button) view.findViewById(R.id.checkbox_valid_btn);
+        RelativeLayout validBtnLayout = (RelativeLayout) view.findViewById(R.id.checkbox_valid_btn);
+        Button validBtn = (Button) validBtnLayout.findViewById(R.id.valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;
@@ -125,7 +127,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.checkbox_valid_btn) {
+        if (v.getId() == R.id.valid_btn) {
             validateAnswer(v);
         }
     }

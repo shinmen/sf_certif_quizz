@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -91,7 +92,8 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         correctAnswer = (TextView) view.findViewById(R.id.simple_correct_answer);
         correctAnswer.setText(answer);
 
-        Button validBtn = (Button) view.findViewById(R.id.simple_valid_btn);
+        RelativeLayout validBtnLayout = (RelativeLayout) view.findViewById(R.id.simple_valid_btn);
+        Button validBtn = (Button) validBtnLayout.findViewById(R.id.valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;
@@ -111,7 +113,7 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.simple_valid_btn) {
+        if (v.getId() == R.id.valid_btn) {
             validateAnswer(v);
         }
     }

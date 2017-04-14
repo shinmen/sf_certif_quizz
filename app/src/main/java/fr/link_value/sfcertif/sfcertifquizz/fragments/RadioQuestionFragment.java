@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -106,7 +107,8 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
             LessonContainer.addView(web);
         }
 
-        Button validBtn = (Button) view.findViewById(R.id.radio_valid_btn);
+        RelativeLayout validBtnLayout = (RelativeLayout) view.findViewById(R.id.radio_valid_btn);
+        Button validBtn = (Button) validBtnLayout.findViewById(R.id.valid_btn);
         validBtn.setOnClickListener(this);
 
         return view;
@@ -125,7 +127,7 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.radio_valid_btn) {
+        if (v.getId() == R.id.valid_btn) {
             validateAnswer(v);
         }
     }

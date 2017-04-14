@@ -6,10 +6,10 @@
     tools:context="fr.link_value.sfcertif.sfcertifquizz.fragments.CheckboxQuestionFragment">
 
     <LinearLayout
-
         android:id="@+id/checkbox_question_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -32,11 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Button
+        <include layout="@layout/valid_button"
             android:id="@+id/checkbox_valid_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/valid_quizz_btn"
             />
     </LinearLayout>
 
@@ -46,6 +43,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/checkbox_answer_container"
         android:visibility="invisible"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
         android:layout_weight="1">
 

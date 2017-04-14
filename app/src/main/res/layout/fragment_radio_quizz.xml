@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/radio_question_container"
         android:orientation="vertical"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_weight="1">
         <TextView
             android:layout_width="match_parent"
@@ -29,13 +30,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/radio_group_question"/>
 
-        <Button
+        <include layout="@layout/valid_button"
             android:id="@+id/radio_valid_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/valid_quizz_btn"
             />
-
     </LinearLayout>
 
     <LinearLayout
@@ -44,6 +41,7 @@
         android:id="@+id/radio_answer_container"
         android:visibility="invisible"
         android:orientation="vertical"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_weight="1">
         <LinearLayout
             android:layout_width="match_parent"
