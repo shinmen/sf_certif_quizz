@@ -98,13 +98,13 @@ public class RadioQuestionFragment extends Fragment implements View.OnClickListe
         correctAnswer.setText(answer);
         answerStatus = (ImageView) view.findViewById(R.id.radio_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.radio_answer_container);
-        LinearLayout LessonContainer = (LinearLayout) view.findViewById(R.id.radio_more_container);
+        LinearLayout lessonContainer = (LinearLayout) view.findViewById(R.id.radio_more_container);
 
         for (String item : quizz.getLessons()) {
             final WebView web = new WebView(getActivity());
             web.getSettings().setJavaScriptEnabled(false);
             web.loadData(item, null, null);
-            LessonContainer.addView(web);
+            lessonContainer.addView(web);
         }
 
         RelativeLayout validBtnLayout = (RelativeLayout) view.findViewById(R.id.radio_valid_btn);

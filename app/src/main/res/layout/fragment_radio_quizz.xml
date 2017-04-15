@@ -1,69 +1,74 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="fr.link_value.sfcertif.sfcertifquizz.fragments.RadioQuestionFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radio_question_container"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_weight="1">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/SubjectFont"
-            android:id="@+id/radio_subject"/>
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_question"
-            android:textAppearance="@style/QuizzFont"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radio_group_question"/>
-
-        <include layout="@layout/valid_button"
-            android:id="@+id/radio_valid_btn"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radio_answer_container"
-        android:visibility="invisible"
-        android:orientation="vertical"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_weight="1">
+        >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radio_question_container"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/radio_answer_img"/>
+                android:textAppearance="@style/SubjectFont"
+                android:id="@+id/radio_subject"/>
             <TextView
                 android:text="TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/radio_correct_answer"
+                android:id="@+id/radio_question"
                 android:textAppearance="@style/QuizzFont"
-                android:layout_weight="0.5" />
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_group_question"/>
+
+            <include layout="@layout/valid_button"
+                     android:id="@+id/radio_valid_btn"
+                />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radio_more_container"
+            android:id="@+id/radio_answer_container"
+            android:visibility="invisible"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_answer_img"/>
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radio_correct_answer"
+                    android:textAppearance="@style/QuizzFont"
+                    android:layout_weight="0.5" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/radio_more_container"
+                android:orientation="vertical"
+                android:layout_weight="1">
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</ScrollView>

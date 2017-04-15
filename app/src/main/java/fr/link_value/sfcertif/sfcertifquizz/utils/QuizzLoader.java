@@ -1,7 +1,9 @@
 package fr.link_value.sfcertif.sfcertifquizz.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import fr.link_value.sfcertif.sfcertifquizz.models.Quizz;
 import io.reactivex.Flowable;
@@ -36,6 +38,14 @@ public class QuizzLoader {
                         return Flowable.fromIterable(quizzs)
                                 .filter(filter)
                                 .toList();
+                    }
+                })
+                .map(new Function<List<Quizz>, List<Quizz>>() {
+                    @Override
+                    public List<Quizz> apply(List<Quizz> quizzs) throws Exception {
+                        long seed = System.nanoTime();
+                        Collections.shuffle(quizzs, new Random(seed));
+                        return quizzs;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

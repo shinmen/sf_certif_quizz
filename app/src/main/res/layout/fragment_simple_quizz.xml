@@ -1,71 +1,75 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="fr.link_value.sfcertif.sfcertifquizz.fragments.SimpleQuestionFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/simple_question_container"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_weight="1">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/SubjectFont"
-            android:id="@+id/simple_subject"/>
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/QuizzFont"
-            android:id="@+id/simple_question" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/QuizzFont"
-            android:id="@+id/simple_question_edit"/>
-
-        <include layout="@layout/valid_button"
-            android:id="@+id/simple_valid_btn"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/simple_answer_container"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_weight="1">
+        >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
+            android:layout_height="wrap_content"
+            android:id="@+id/simple_question_container"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_weight="1">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/simple_answer_img"/>
+                android:textAppearance="@style/SubjectFont"
+                android:id="@+id/simple_subject"/>
             <TextView
                 android:text="TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/simple_correct_answer"
-                android:layout_weight="1"
                 android:textAppearance="@style/QuizzFont"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                android:id="@+id/simple_question" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/QuizzFont"
+                android:id="@+id/simple_question_edit"/>
+
+            <include layout="@layout/valid_button"
+                     android:id="@+id/simple_valid_btn"
+                />
         </LinearLayout>
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/simple_more"
-            android:textAppearance="@style/QuizzFont"
-            android:layout_weight="1" />
+            android:id="@+id/simple_answer_container"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/simple_answer_img"/>
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/simple_correct_answer"
+                    android:layout_weight="0.5"
+                    android:textAppearance="@style/QuizzFont"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/simple_more_container"
+                android:orientation="vertical"
+                android:layout_weight="1">
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

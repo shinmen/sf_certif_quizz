@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -82,15 +83,19 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
         answerProposition = (EditText) view.findViewById(R.id.simple_question_edit);
         answerStatus = (ImageView) view.findViewById(R.id.simple_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.simple_answer_container);
-
-        TextView more = (TextView) view.findViewById(R.id.simple_more);
-        String mores = TextUtils.join(", ", quizz.getLessons());
-        more.setText(Html.fromHtml(mores));
+        LinearLayout lessonContainer = (LinearLayout) view.findViewById(R.id.simple_more_container);
 
         List<String> answers = quizz.getAnswers();
         String answer = TextUtils.join(", ", answers);
         correctAnswer = (TextView) view.findViewById(R.id.simple_correct_answer);
         correctAnswer.setText(answer);
+
+        for (String item : quizz.getLessons()) {
+            final WebView web = new WebView(getActivity());
+            web.getSettings().setJavaScriptEnabled(false);
+            web.loadData(item, null, null);
+            lessonContainer.addView(web);
+        }
 
         RelativeLayout validBtnLayout = (RelativeLayout) view.findViewById(R.id.simple_valid_btn);
         Button validBtn = (Button) validBtnLayout.findViewById(R.id.valid_btn);

@@ -1,71 +1,79 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="fr.link_value.sfcertif.sfcertifquizz.fragments.CheckboxQuestionFragment">
-
-    <LinearLayout
-        android:id="@+id/checkbox_question_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/checkbox_subject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/SubjectFont" />
-
-        <TextView
-            android:id="@+id/checkbox_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:text="TextView"
-            android:textAppearance="@style/QuizzFont" />
-
-        <TableRow
-            android:id="@+id/checkbox_group_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <include layout="@layout/valid_button"
-            android:id="@+id/checkbox_valid_btn"
-            />
-    </LinearLayout>
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkbox_answer_container"
-        android:visibility="invisible"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1">
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
+        >
+        <LinearLayout
+            android:id="@+id/checkbox_question_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/checkbox_correct_answer"
-            android:textAppearance="@style/QuizzFont"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:layout_weight="1"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/checkbox_answer_img"/>
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/QuizzFont"
-            android:id="@+id/checkbox_more"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/checkbox_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/SubjectFont" />
+
+            <TextView
+                android:id="@+id/checkbox_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:text="TextView"
+                android:textAppearance="@style/QuizzFont" />
+
+            <LinearLayout
+                android:id="@+id/checkbox_group_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+
+            <include layout="@layout/valid_button"
+                     android:id="@+id/checkbox_valid_btn"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkbox_answer_container"
+            android:visibility="invisible"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkbox_answer_img"/>
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkbox_correct_answer"
+                    android:textAppearance="@style/QuizzFont"
+                    android:layout_weight="0.5"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkbox_more_container"
+                android:orientation="vertical"
+                android:layout_weight="1">
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

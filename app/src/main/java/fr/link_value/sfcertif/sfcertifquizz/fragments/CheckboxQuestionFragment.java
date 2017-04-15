@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -39,7 +41,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
 
     private TextView question;
     private TextView correctAnswer;
-    private TableRow group;
+    private LinearLayout group;
     private ImageView answerStatus;
     private LinearLayout answerContainer;
 
@@ -81,7 +83,7 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         TextView subject = (TextView) view.findViewById(R.id.checkbox_subject);
         subject.setText(quizz.getTopic());
 
-        group = (TableRow) view.findViewById(R.id.checkbox_group_question);
+        group = (LinearLayout) view.findViewById(R.id.checkbox_group_question);
         List<String> choices = quizz.getChoices();
 
         for (int i = 0; i < choices.size(); i++) {
@@ -99,13 +101,14 @@ public class CheckboxQuestionFragment extends Fragment implements View.OnClickLi
         correctAnswer.setText(answer);
         answerStatus = (ImageView) view.findViewById(R.id.checkbox_answer_img);
         answerContainer = (LinearLayout) view.findViewById(R.id.checkbox_answer_container);
+        LinearLayout lessonContainer = (LinearLayout) view.findViewById(R.id.checkbox_more_container);
 
-        TextView more = (TextView) view.findViewById(R.id.checkbox_more);
-        StringBuilder moreBuilder = new StringBuilder();
         for (String item : quizz.getLessons()) {
-            moreBuilder.append(item);
+            final WebView web = new WebView(getActivity());
+            web.getSettings().setJavaScriptEnabled(false);
+            web.loadData(item, null, null);
+            lessonContainer.addView(web);
         }
-        more.setText(Html.fromHtml(moreBuilder.toString()));
 
         RelativeLayout validBtnLayout = (RelativeLayout) view.findViewById(R.id.checkbox_valid_btn);
         Button validBtn = (Button) validBtnLayout.findViewById(R.id.valid_btn);

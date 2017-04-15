@@ -77,11 +77,6 @@ public class QuizzActivity extends AppCompatActivity
             // Otherwise, select the previous step.
             mPagerQuizz.setCurrentItem(mPagerQuizz.getCurrentItem() - 1);
         }
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
