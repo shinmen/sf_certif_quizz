@@ -65,6 +65,10 @@ public class SimpleQuestionFragment extends Fragment implements View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LinearLayout loader = (LinearLayout) getActivity().findViewById(R.id.loader_layout);
+        if (loader.getVisibility() == View.VISIBLE) {
+            //loader.setVisibility(View.GONE);
+        }
         if (getArguments() != null) {
             quizz = getArguments().getParcelable(ARG_QUIZZ);
         }

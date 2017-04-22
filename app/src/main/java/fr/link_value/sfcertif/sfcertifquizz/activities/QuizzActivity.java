@@ -12,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -43,6 +46,8 @@ public class QuizzActivity extends AppCompatActivity
 
     private CompositeDisposable mComposite;
 
+    private LinearLayout mProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,8 @@ public class QuizzActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        mProgressBar = (LinearLayout) findViewById(R.id.loader_layout);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -69,7 +76,7 @@ public class QuizzActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (mPagerQuizz.getCurrentItem() == 0) {
+        if (mPagerQuizz == null || mPagerQuizz.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.
             super.onBackPressed();
@@ -119,7 +126,7 @@ public class QuizzActivity extends AppCompatActivity
             @Override
             public void onError(Throwable e) {
                 Log.d("error", e.getMessage());
-                Toast.makeText(QuizzActivity.this, new String("Une erreur est survenue lors du chargement de votre quizz."), Toast.LENGTH_LONG);
+                Toast.makeText(QuizzActivity.this, new String("Une erreur est survenue lors du chargement de votre quizz."), Toast.LENGTH_LONG).show();
             }
         };
 
@@ -129,7 +136,7 @@ public class QuizzActivity extends AppCompatActivity
                 return true;
             }
         };
-        Disposable disposable = loader.getQuizzs(filter, subscriber);
+        Disposable disposable = loader.getQuizzs(filter, subscriber, mProgressBar);
         mComposite.add(disposable);
     }
 
@@ -143,12 +150,13 @@ public class QuizzActivity extends AppCompatActivity
                 // Instantiate a ViewPager and a PagerAdapter.
                 mPagerAdapter = new QuestionPagerAdapter(getSupportFragmentManager(), fragmentFactory, quizzs.size());
                 mPagerQuizz.setAdapter(mPagerAdapter);
+                dispose();
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.d("error", e.getMessage());
-                Toast.makeText(QuizzActivity.this, new String("Une erreur est survenue lors du chargement de votre quizz."), Toast.LENGTH_LONG);
+                Toast.makeText(QuizzActivity.this, new String("Une erreur est survenue lors du chargement de votre quizz."), Toast.LENGTH_LONG).show();
             }
         };
 
@@ -162,7 +170,7 @@ public class QuizzActivity extends AppCompatActivity
             }
         };
 
-        Disposable disposable = loader.getQuizzs(filter, subscriber);
+        Disposable disposable = loader.getQuizzs(filter, subscriber, mProgressBar);
         mComposite.add(disposable);
     }
 }

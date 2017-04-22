@@ -22,10 +22,6 @@ public class QuestionPagerAdapter extends FragmentStatePagerAdapter {
         countQuestions = quizzSize;
     }
 
-    public void refreshFragmentFactory(QuestionFragmentFactory questionFragmentFactory) {
-        fragmentFactory = questionFragmentFactory;
-    }
-
     @Override
     public Fragment getItem(int position) {
         return fragmentFactory.getQuestionFragment(position);

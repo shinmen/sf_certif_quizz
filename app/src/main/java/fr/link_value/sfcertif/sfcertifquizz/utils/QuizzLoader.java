@@ -1,5 +1,9 @@
 package fr.link_value.sfcertif.sfcertifquizz.utils;
 
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +14,10 @@ import io.reactivex.Flowable;
 import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.LongConsumer;
 import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -21,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class QuizzLoader {
 
-    public Disposable getQuizzs(final Predicate filter, DisposableSingleObserver subscriber) {
+    public Disposable getQuizzs(final Predicate filter, DisposableSingleObserver subscriber, final LinearLayout progressBar) {
         Flowable.concat(MemoryCache.getQuizzMemoryCache(), QuizzRequest.getQuestionList())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
@@ -49,6 +56,18 @@ public class QuizzLoader {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                })
+                .doOnSuccess(new Consumer<List<Quizz>>() {
+                    @Override
+                    public void accept(List<Quizz> quizzs) throws Exception {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                })
                 .subscribe(subscriber);
 
         return subscriber;
